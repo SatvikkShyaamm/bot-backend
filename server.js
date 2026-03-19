@@ -40,14 +40,14 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ MongoDB connected'))
   .catch(err => { console.error('MongoDB error:', err); process.exit(1); });
 
+// Health check
+app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+
 // Routes
 app.use('/api/auth', authLimiter, authRoutes);
 app.use('/api/progress', progressRoutes);
 app.use('/api/simulation', simulationRoutes);
 app.use('/api', claudeRoutes);
-
-// Health check
-app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
 // Global error handler
 app.use((err, req, res, next) => {
