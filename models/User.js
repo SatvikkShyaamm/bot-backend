@@ -38,9 +38,10 @@ const userSchema = new mongoose.Schema({
   badges: [badgeSchema],
   currentGameLevel: { type: Number, default: 1 }, // Which game level unlocked
   createdAt: { type: Date, default: Date.now },
-  lastLoginAt: { type: Date }
+  lastLoginAt: { type: Date },
+  resetToken: { type: String, select: false },
+  resetTokenExpiry: { type: Date, select: false }
 }, { timestamps: true });
-
 // Hash password before saving
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
